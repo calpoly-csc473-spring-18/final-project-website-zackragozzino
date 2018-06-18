@@ -1,0 +1,123 @@
+﻿<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="./Extras/bootstrap.min.css" rel="stylesheet">
+    <script src="./Extras/bootstrap.min.js.download"></script>
+    <link href="./Extras/stylish-portfolio.css" rel="stylesheet">
+    <title>Raytracer</title>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h1>
+                        CSC473 Raytracer - Autostereograms
+                    </h1>
+                </div>
+                <div class="col-lg-6" style="text-align:right">
+                    <h1>
+                        <small>
+                            Zack Ragozzino
+                        </small>
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <h3>
+            What is an autostereogram?
+        </h3>
+        <p> "Autostereogram - a single-image stereogram (SIS), designed to create the visual illusion of a three-dimensional (3D) scene from a two-dimensional image." </p>
+        <a href="https://en.wikipedia.org/wiki/Autostereogram">Source</a>
+
+        <br />
+        <br />
+        <p>Video explanation</p>
+
+        <div class="video">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/v8O8Em_RPNg" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <br />
+        <a href="http://www.magiceye.com/faq_example.htm"> How to view an autostereogram
+        <br />
+        <a href="http://www.hidden-3d.com/how_to_view_stereogram.php">Additional tips on proper viewing</a>
+
+        <h3>
+            My implementation
+        </h3>
+        <p>Note: For ideal viewing, place your head within 6 inches of the screen and focus your gaze until it appears there are 3 dots on the image.</p>
+        <p>Then, look towards the center of the image and slowly move your head back until the 3D image appears. </p>
+
+        <!-- Mickey mouse Image -->
+        <div class="well" style="text-align:center">
+            <img src="./Extras/mickey_SIS.png" style="width:800; height:600; display:block; margin:0 auto;">
+            A mickey mouse head
+        </div>
+
+        <!-- Heart Image -->
+        <div class="well" style="text-align:center">
+            <img src="./Extras/valentine_SIS.png" style="width:800; height:600; display:block; margin:0 auto;">
+            A heart
+        </div>
+
+        <!-- Saturn image -->
+        <div class="well" style="text-align:center">
+            <img src="./Extras/saturn_SIS.png" style="width:800; height:600; display:block; margin:0 auto;">
+            Saturn
+        </div>
+
+        <h3>
+            How it's done
+        </h3>
+        <p> First, I generate a noise pattern. </p>
+
+        <!-- Noise image -->
+        <div class="well" style="text-align:center">
+            <img src="./Extras/noise.png" style="width:800; height:600; display:block; margin:0 auto;">
+            A random color palette is generated at runtime.
+        </div>
+
+        <p> Then, I read in a .pov file and generate a depth map image of the specified 3D scene. </p>
+        <p> This is the image that will "pop out" when the viewer focuses their eyes. </p>
+
+        <!-- Depth map image -->
+        <div class="well" style="text-align:center">
+            <img src="./Extras/depthmaps.png" style="width:800; height:600; display:block; margin:0 auto;">
+            The brightness value of each pixel corresponds to its distance to the camera.
+        </div>
+
+        <p> The pattern is repeated and offsets are applied to pixels based off of values read from the depth map. </p>
+        <!-- Reference image -->
+        <div class="well" style="text-align:center">
+            <img src="./Extras/reference_image.png" style="width:800; height:400; display:block; margin:0 auto;">
+            <a href="https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch41.html">Image source</a>
+        </div>
+
+        <h3>
+            Software design
+        </h3>
+
+        <p>My major optimization came from reducing the number of times I calculate intersections. </p>
+        <p>I created a class called "HitObject" that holds a reference to the intersected object of a hit, </p>
+        <p>the hit position in world space, and the t value of the hit. Each Hit instance holds a reference </p>
+        <p>to a HitObject and functions update the values of the HitObject by calling the getObjectT() function.</p>
+        <p>This was particularly helpful when adding spatial data structures to my code as it meant I could </p>
+        <p>update hit information during tree traversal. Because of this, my spatial data structure code</p>
+        <p> ran significantly faster than before. </p>
+
+        <h3>
+            References
+        </h3>
+        <a href="https://developer.nvidia.com/gpugems/GPUGems/gpugems_ch41.html">GPU Gems - Realtime Stereograms</a>
+        <br />
+        <a href="https://www.ime.usp.br/~otuyama/stereogram/basic/index.html">A very old introduction to random dot stereograms</a>
+
+
+        <br /> <br /> <br />
+
+
+
